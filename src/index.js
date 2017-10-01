@@ -1,6 +1,6 @@
 import MultipleSelectHelper from './MultipleSelectHelper'
 
-export default function install (Vue) {
+module.exports = function install (Vue) {
   if (install.installed) {
     return
   }
