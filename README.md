@@ -1,5 +1,9 @@
 Universal multiple select helper component for Vue
 
+## Demo
+
+[Demo on jsfiddle](https://jsfiddle.net/raymondralibi/o2s9pufa/)
+
 ## Installation
 
 npm:
@@ -11,138 +15,150 @@ npm install vue-multiple-select-helper --save
 ## Usage
 
 ```js
-import VueMultipleSelectionHelper from 'vue-multiple-select-helper'
-Vue.use(VueMultipleSelectionHelper)
+import VueMultipleSelectHelper from 'vue-multiple-select-helper'
+Vue.use(VueMultipleSelectHelper)
 ```
 
-```vue
-<template>
-  <div class="c-cmyk-select-demo">
+Using wrapper in a component
+```js
+Vue.component('cmyk-select-demo', {
+  template: `
+    <div class="c-cmyk-select-demo">
 
-    <h2>CMYK Multiple</h2>
+      <h5>CMYK Single</h5>
 
-    <multiple-select-helper
-      :data="colors"
-      :initialSelection="preselectedMultipleColors"
-      v-model="clickedMultipleColor"
-      @selection-change="handleMultipleSelectionChange">
-      <ul v-for="color in colors">
-        <li :class="{selected: isMultipleSelected(color)}">
-          <h5>{{ color.name }}</h5>
-          <button @click.prevent="clickedMultipleColor = color">
-            {{ isMultipleSelected(color) ? "Deselect" : "Select" }}
-          </button>
-        </li>
-      </ul>
-    </multiple-select-helper>
+      <table>
+        <tr>
+          <th>
+            Collection
+          </th>
+          <th>
+            Recent Single Clicked
+          </th>
+          <th>
+            Current Single Selection
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <multiple-select-helper
+              :data="colors"
+              :initialSelection="preselectedSingleColor"
+              :multiple="false"
+              v-model="clickedSingleColor"
+              @selection-change="handleSingleSelectionChange">
+              <ul v-for="color in colors">
+                <li :class="{selected: isSingleSelected(color)}">
+                  <p>
+                    {{ color.name }}
+                    <button @click.prevent="clickedSingleColor = color">
+                      {{ isSingleSelected(color) ? "Deselect" : "Select" }}
+                    </button>
+                  </p>
+                </li>
+              </ul>
+            </multiple-select-helper>
+          </td>
+          <td>
+            <pre>{{ recentSingleColor }}</pre>
+          </td>
 
-    <h3>Recent Multiple Clicked</h3>
-    <pre>{{ recentMultipleColor }}</pre>
-    <h3>Current Multiple Selection</h3>
-    <pre>{{ currentMultipleSelection }}</pre>
+          <td>
+            <pre>{{ currentSingleSelection }}</pre>
+          </td>
+        </tr>
+      </table>
 
-    <hr/>
+      <h5>CMYK Multiple</h5>
 
-    <h2>CMYK Single</h2>
+      <table>
+        <tr>
+          <th>
+            Collection
+          </th>
+          <th>
+            Recent Multiple Clicked
+          </th>
+          <th>
+            Current Multiple Selection
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <multiple-select-helper
+              :data="colors"
+              :initialSelection="preselectedMultipleColors"
+              v-model="clickedMultipleColor"
+              @selection-change="handleMultipleSelectionChange">
+              <ul v-for="color in colors">
+                <li :class="{selected: isMultipleSelected(color)}">
+                  <p>
+                    {{ color.name }}
+                    <button @click.prevent="clickedMultipleColor = color">
+                      {{ isMultipleSelected(color) ? "Deselect" : "Select" }}
+                    </button>
+                  </p>
+                </li>
+              </ul>
+            </multiple-select-helper>
+          </td>
 
-    <multiple-select-helper
-      :data="colors"
-      :initialSelection="preselectedSingleColor"
-      :multiple="false"
-      v-model="clickedSingleColor"
-      @selection-change="handleSingleSelectionChange">
-      <ul v-for="color in colors">
-        <li :class="{selected: isSingleSelected(color)}">
-          <h5>{{ color.name }}</h5>
-          <button @click.prevent="clickedSingleColor = color">
-            {{ isSingleSelected(color) ? "Deselect" : "Select" }}
-          </button>
-        </li>
-      </ul>
-    </multiple-select-helper>
+          <td>
+            <pre>{{ recentMultipleColor }}</pre>
+          </td>
 
-    <h3>Recent Single Clicked</h3>
-    <pre>{{ recentSingleColor }}</pre>
-    <h3>Current Single Selection</h3>
-    <pre>{{ currentSingleSelection }}</pre>
+          <td>
+            <pre>{{ currentMultipleSelection }}</pre>
+          </td>
+        </tr>
+      </table>
 
-  </div>
-</template>
-
-<script>
-  export default {
-    name: 'c-cmyk-select-demo',
-    data () {
-      return {
-        colors: [
-          {
-            id: '1',
-            name: 'Cyan'
-          },
-          {
-            id: '2',
-            name: 'Magenta'
-          },
-          {
-            id: '3',
-            name: 'Yellow'
-          },
-          {
-            id: '4',
-            name: 'Black'
-          }
-        ],
-
-        // Multiple selection
-        preselectedMultipleColors: [
-          {
-            id: '2',
-            name: 'Magenta'
-          }
-        ],
-        currentMultipleSelection: [],
-        clickedMultipleColor: {},
-        recentMultipleColor: null,
-
-        // Single selection
-        preselectedSingleColor: {
-          id: '4',
-          name: 'Black'
-        },
-        clickedSingleColor: {},
-        currentSingleSelection: {},
-        recentSingleColor: null
-      }
-    },
-
-    methods: {
-      // Multiple selection
-      handleMultipleSelectionChange (selection, recent) {
-        this.currentMultipleSelection = selection
-        this.recentMultipleColor = recent
-      },
-      isMultipleSelected (val) {
-        return this.currentMultipleSelection.findIndex((item) => item.id === val.id) !== -1
-      },
+    </div>
+  `,
+  
+  data () {
+    return {
+      colors: [
+        { id: '1', name: 'Cyan' },
+        { id: '2', name: 'Magenta' },
+        { id: '3', name: 'Yellow' },
+        { id: '4', name: 'Black' }
+      ],
 
       // Single selection
-      handleSingleSelectionChange (selection, recent) {
-        this.currentSingleSelection = selection
-        this.recentSingleColor = recent
-      },
-      isSingleSelected (val) {
-        return this.currentSingleSelection.id === val.id
-      }
+      preselectedSingleColor: { id: '4', name: 'Black' },
+      clickedSingleColor: {},
+      currentSingleSelection: {},
+      recentSingleColor: null,
+
+      // Multiple selection
+      preselectedMultipleColors: [{ id: '2', name: 'Magenta' }],
+      currentMultipleSelection: [],
+      clickedMultipleColor: {},
+      recentMultipleColor: null
+    }
+  },
+
+  methods: {
+    // Single selection
+    handleSingleSelectionChange (selection, recent) {
+      this.currentSingleSelection = selection
+      this.recentSingleColor = recent
+    },
+    isSingleSelected (val) {
+      return this.currentSingleSelection.id === val.id
+    },
+    
+    // Multiple selection
+    handleMultipleSelectionChange (selection, recent) {
+      this.currentMultipleSelection = selection
+      this.recentMultipleColor = recent
+    },
+    isMultipleSelected (val) {
+      return this.currentMultipleSelection.findIndex((item) => item.id === val.id) !== -1
     }
   }
-</script>
-
-<style scoped>
-  li.selected h5,
-  li.selected button {
-    font-weight: bold;
-  }
-</style>
+})
 ```
 
 ### Attributes
