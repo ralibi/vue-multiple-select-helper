@@ -1,6 +1,6 @@
 {
   "name": "vue-multiple-select-helper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Universal multiple select helper component for Vue",
   "main": "index.js",
   "scripts": {
