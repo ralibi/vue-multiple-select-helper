@@ -19,7 +19,7 @@ import VueMultipleSelectHelper from 'vue-multiple-select-helper'
 Vue.use(VueMultipleSelectHelper)
 ```
 
-Using wrapper in a component
+Using `multiple-select-helper` wrapped in a component
 ```js
 Vue.component('cmyk-select-demo', {
   template: `
@@ -168,7 +168,7 @@ Vue.component('cmyk-select-demo', {
 | `multiple` | Selection mode | No | `Boolean` | — | `true` |
 | `initialSelection` | Initial selection | Yes | `Array` of object if multiple is `true` or `Object` if multiple is `false` | — | — |
 | `selectionKey` | — | No | `String` | — | `'id'` |
-| `value` (`v-model`) | — | Yes | `Object` | `null` | `null` |
+| `value` (`v-model`) | — | Yes | `Object` | `{}` | `{}` |
 ### Slot
 | Name | Description |
 |---|---|
